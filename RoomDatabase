@@ -1,0 +1,227 @@
+//Gradle(module)
+plugins {
+    alias(libs.plugins.android.application)
+}
+
+android {
+    namespace = "com.example.room"
+    compileSdk = 35
+
+    defaultConfig {
+        applicationId = "com.example.room"
+        minSdk = 24
+        targetSdk = 35
+        versionCode = 1
+        versionName = "1.0"
+
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            isMinifyEnabled = false
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+        }
+    }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
+    }
+}
+
+dependencies {
+
+    implementation(libs.appcompat)
+    implementation(libs.material)
+    implementation(libs.activity)
+    implementation(libs.constraintlayout)
+    implementation(libs.room.common)
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.ext.junit)
+    androidTestImplementation(libs.espresso.core)
+    implementation(libs.androidx.room.runtime)//add this
+    annotationProcessor(libs.androidx.room.compiler)
+
+
+}
+
+
+
+
+MainActivity.java
+ package com.example.room;
+
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+
+import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+
+import java.util.ArrayList;
+
+ public class MainActivity extends AppCompatActivity {
+EditText editText,editText2;
+Button btnNext;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
+        setContentView(R.layout.activity_main);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            editText=findViewById(R.id.editText);
+            editText2=findViewById(R.id.editText2);
+            btnNext=findViewById(R.id.btnNext);
+            Dtabasehelper databaseHelper = Dtabasehelper.getDB(this);
+            btnNext.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String title =editText.getText().toString();
+                    String amount=editText2.getText().toString();
+                    databaseHelper.expensedao().addTx(
+                            new Expense(title,amount) // id is autogennerated user give only title and amount thus constructor of 2 p is used
+                    );
+                   ArrayList<Expense>arrExpenses =(ArrayList<Expense>) databaseHelper.expensedao().getAllExpense();
+                   for(int i=0;i<arrExpenses.size();i++){
+                       Log.d("Data","Title:"+arrExpenses.get(i).getTitle()+"Amount: "+arrExpenses.get(i).getAmount()+"ID: "+arrExpenses.get(i).getId());
+                   }
+                }
+            });
+
+
+            return insets;
+        });
+    }
+}
+
+
+
+
+Databasehelper.java(abstract class)
+package com.example.room;
+
+import android.content.Context;
+
+import androidx.room.Database;
+import androidx.room.Room;
+import androidx.room.RoomDatabase;
+@Database(entities = Expense.class, exportSchema = false, version = 1)
+abstract class Dtabasehelper extends RoomDatabase {
+    private static final String DB_NAME = "expensedb";// file name
+    private static Dtabasehelper instance;
+
+    public static synchronized Dtabasehelper getDB(Context context) {
+        if (instance == null) {
+            instance = Room.databaseBuilder(context.getApplicationContext(), Dtabasehelper.class, DB_NAME)
+                    .fallbackToDestructiveMigration()// create new database sometimes where it cannot perform migration
+                    .allowMainThreadQueries()// Brings UI to main thread
+                    .build();
+        }
+        return instance;
+    }
+
+    public abstract Expensedao expensedao();
+}
+
+
+
+
+Expense.java
+package com.example.room;
+
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "expense")// Entity for table
+public class Expense {
+    @PrimaryKey(autoGenerate = true)
+    private int id;
+    @ColumnInfo(name="title")
+    private String title;
+    @ColumnInfo(name="amount")
+    private String amount;
+    Expense(int id,String title,String amount) {
+        this.id = id;
+        this.amount = amount;
+        this.title = title;
+    }
+    @Ignore// Skip this
+        Expense(String title,String amount){
+            this.title=title;
+            this.amount=amount;
+        }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getAmount() {
+        return amount;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setAmount(String amount) {
+        this.amount = amount;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+}
+
+
+
+
+Expensedao(Interface)
+package com.example.room;
+
+import androidx.room.Dao;
+import androidx.room.Delete;
+import androidx.room.Insert;
+import androidx.room.Query;
+import androidx.room.Update;
+
+import java.util.List;
+
+@Dao
+
+public interface Expensedao {
+    @Query("select * from expense")
+    List<Expense> getAllExpense();
+
+
+
+    @Insert
+    void addTx(Expense expense);
+
+    @Update
+    void updateTx(Expense expense);
+
+    @Delete
+    void deleteTx(Expense expense);
+}
+
+
+
+
+
+
