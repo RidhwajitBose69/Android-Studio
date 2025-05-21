@@ -1,3 +1,4 @@
+```
 //Implicit and Explicit Intents
 package com.example.aap3;
 
@@ -41,3 +42,4 @@ public class SecondActivity extends AppCompatActivity {
         });
     }
 }
+```
