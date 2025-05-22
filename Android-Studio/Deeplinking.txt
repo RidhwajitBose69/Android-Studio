@@ -1,0 +1,18 @@
+Deeplinking
+
+Instead of opening an app and requiring the user to navigate to the desired content, a deep link takes them directly to that specific page or section.
+
+ uri is used 
+methods 
+manifest
+
+<intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="https" />
+                <data android:host="www.viralcode.com" />
+                <data android:path="/v1/" />
+            </intent-filter>

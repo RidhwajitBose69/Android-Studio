@@ -1,0 +1,14 @@
+CONTENT PROVIDER
+
+COMPONENETS
+Allow permission
+
+Read
+ public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults)
+
+if user does not grant permission toast will come up
+
+
+Cursor act as pointer of that query of 
+
+

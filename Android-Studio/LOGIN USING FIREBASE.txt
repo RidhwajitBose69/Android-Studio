@@ -1,0 +1,42 @@
+LOGIN USING FIREBASE
+
+First create project in firebase then connect it  to app  import sdk and add dependencies 
+
+COMPONENTS
+1.LOGIN
+2.REGISTER
+3.MainActivity
+
+
+REGISTER
+Onstart function is for checking whether user registered or notand afeter register intent passing to main
+
+Login is same as Register we need to copy function from firebase
+
+  mAuth.createUserWithEmailAndPassword(email, password)
+                            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {//to handle asyncronised tasks
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    progressBar.setVisibility(View.GONE);//after successful register  progress bar is gone
+                                    if (task.isSuccessful()) {
+                                        Toast.makeText(Registration.this, "Account Created", Toast.LENGTH_SHORT).show();// diplay account created
+                                        // Auto Login and move to main activity.
+                                        mAuth.signInWithEmailAndPassword(email, password)
+                                                .addOnCompleteListener(authTask -> {
+                                                    if (authTask.isSuccessful()) {
+                                                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                                        startActivity(intent);
+                                                        finish();
+                                                    } else {
+                                                        Toast.makeText(Registration.this, "Failed to Auto Login", Toast.LENGTH_SHORT).show();
+                                                    }
+
+                                                });
+
+
+MainActivity
+Here for signout
+intent pass to login.class
+
+
+

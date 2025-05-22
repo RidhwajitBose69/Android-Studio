@@ -1,0 +1,17 @@
+INTENTS
+Moving 1 component to other
+
+1.Explicit
+2.Implicit
+
+
+EXPLICIT
+We know exact position where we want to start
+Intent intent=new Intent(MainActivity.class, SecondActivity.class);
+startActivity(intent);
+
+IMPLICIT
+We specify the action system suggest to perform that component
+example email
+Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.example.com"));
+startActivity(intent);

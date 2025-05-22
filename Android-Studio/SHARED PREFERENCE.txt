@@ -1,0 +1,17 @@
+SHARED PREFERENCE
+is a library
+It store keys which is only accessible by app in internal storage
+
+Handler is used to display splash screen for a desired time
+new Handler().postDelayed(new Runnable() 
+
+SharedPreferences pref = getSharedPreferences
+
+Shared preference is a readonly we cannot directly change values for that we are using editor 
+SharedPreferences.Editor editor= pref.edit();
+editor.putBoolean("flag",true);
+                    editor.apply();
+
+
+
+

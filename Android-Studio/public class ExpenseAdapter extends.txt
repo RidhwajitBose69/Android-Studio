@@ -1,0 +1,24 @@
+public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ExpenseViewHolder> {
+
+    // ... (fields, constructor) ...
+
+    @Override
+    public void onBindViewHolder(@NonNull ExpenseViewHolder holder, int position) {
+        ExpenseTransaction expense = expenses.get(position);
+
+        // Set image based on category (replace with actual image loading)
+        if (expense.getCategory().equals("Subscription")) {
+            holder.imageView.setImageResource(R.drawable.ic_subscription);
+        } else if (expense.getCategory().equals("Restaurant")) {
+            holder.imageView.setImageResource(R.drawable.ic_restaurant);
+        } else if (expense.getCategory().equals("Grocery")) {
+            holder.imageView.setImageResource(R.drawable.ic_grocery);
+        }
+
+        // Set text based on category
+        holder.textView.setText(expense.getCategory());
+        holder.textView2.setText("₹" + String.format(Locale.getDefault(), "%.2f", expense.getAmount()));
+    }
+
+    // ... (ViewHolder class) ...
+}

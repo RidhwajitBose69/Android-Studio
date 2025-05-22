@@ -1,0 +1,18 @@
+SERVICE PROVIDER
+Providing service even though app is closed(onBind) 
+
+Manifest
+   <service android:name=".MusicService"/>
+
+
+In onbind() return is null indicates that performing task without needing direct interaction from other components
+
+Independent operation
+ on start to start service 
+
+onstop to stop the service
+
+
+
+
+

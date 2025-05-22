@@ -1,0 +1,58 @@
+NETWORKING USING RETROFIT
+It is used to http request to web server in this after request all html or xml are converted into json file
+
+json is a readable file 
+
+IMPORTANT COMPONENETS
+1.Model class
+2.Interface
+3.Class where retrofit is built
+
+INTERFACE
+@GET specifies http method retrieve data from server
+
+@POST:
+Use for creating new resources on the server.
+Example: @POST("users") to create a new user.
+@PUT:
+Use for completely updating an existing resource on the server.
+Example: @PUT("users/{id}") to update all the details of a user with a specific ID.
+@PATCH:
+Use for partially updating an existing resource on the server.
+Example: @PATCH("users/{id}") to update only the name of a user with a specific ID.
+@DELETE:
+Use for deleting a resource on the server.
+Example: @DELETE("users/{id}") to delete a user with a specific ID.
+@HEAD:
+Use for retrieving only the headers of a response, without the body.
+Example: @HEAD("users/{id}") to check if a user with a specific ID exists.
+@OPTIONS:
+Use for retrieving the communication options for a target resource.
+Example: @OPTIONS("users") to get the supported HTTP methods for the users endpoint.
+
+RETROFIT BUILD
+
+Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(url)
+                    .addConverterFactory(GsonConverterFactory.create())// convert raw data(JSON) to java objects javascript object notation
+                    .build();
+
+Call: HTTP Request
+
+After fetch is successful
+
+ @Override// Call is used for single HTTP requset
+                public void onResponse(Call<List<Model>> call, Response<List<Model>> response) {
+                    List<Model> data=response.body();//after successful fetch json or xml into java objects and store in data of type List<model>
+                    for (int i=0;i< data.size();i++){
+                        textView.append(" SL No: "+data.get(i).getId()+" \nTitle: "+data.get(i).getTitle()+"\n\n");//append in textview
+                    }
+
+
+
+
+
+
+
+
+

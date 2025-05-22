@@ -1,0 +1,18 @@
+ROOM DATABASE
+Its a  library used to work with SQLite in android apps
+
+Important components
+1.Dtabase helper
+2.Interface 
+3.Class where we define getters and setters
+
+1.Database Helper
+  In this class we build roomdatabase
+  getApplicationcontext rm is used allover in app(accessible) next is abstract class databasehelper and craeteinng file here
+
+Interface
+Dao(data access object) used to manipulating data in database
+@Insert,@Update,@Delete
+
+Java class where table is formed 
+

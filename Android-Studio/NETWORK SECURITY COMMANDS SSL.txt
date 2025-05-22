@@ -1,0 +1,9 @@
+NETWORK SECURITY COMMANDS SSL
+openssl genrsa -out my_ca.key 2048
+openssl req -new -key my_ca.key -out my_ca.csr
+openssl x509 -req -days 365 -in my_ca.csr -signkey my_ca.key -out my_ca.crt
+
+optional
+openssl x509 -outform PEM -in my_ca.crt -out my_ca.pem
+openssl x509 -outform PEM -in my_ca.cer -out my_ca.pem
+openssl x509 -outform DER -in my_ca.pem -out my_ca.cer

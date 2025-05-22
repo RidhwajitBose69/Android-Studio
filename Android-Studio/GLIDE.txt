@@ -1,0 +1,13 @@
+GLIDE
+It is used to display image using url when internet is on
+
+ imgGlide = findViewById(R.id.imgGlide);
+            Glide.with(this).load(img).into(imgGlide);
+
+
+
+DEPENDENCIES
+ implementation (libs.glide)
+    annotationProcessor (libs.compiler)
+
+

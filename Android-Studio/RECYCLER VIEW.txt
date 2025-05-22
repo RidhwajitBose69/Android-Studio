@@ -1,0 +1,22 @@
+RECYCLER VIEW
+What it does
+RecyclerView is designed to efficiently display a large number of data items.
+It does this by reusing views that are no longer visible on the screen 
+
+ListView only support linear scrolling when it comes to grid its difficult to perform it
+and it does not have viewholder
+
+Important Component
+1. Adapter
+bridge between recycler and data
+Take data and bind it to view(arraylist)
+has viewholder
+handle itemcount
+
+public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)// its like factory for viewholder objects
+
+ public void onBindViewHolder(@NonNull ViewHolder holder, int position)// id views are in this holder class
+public int getItemCount() {
+        return arrContacts.size();
+    }
+These above are important methods

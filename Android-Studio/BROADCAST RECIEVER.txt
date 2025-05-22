@@ -1,0 +1,11 @@
+BROADCAST RECIEVER
+
+Whenever users battery is low or user turn on fligt mode we can receive it i our app and we can display this using toast
+
+
+onRecieve is the main function
+
+ public void onReceive(Context context, Intent intent) {
+        if (Intent.ACTION_BATTERY_LOW.equals(intent.getAction())) {
+            Log.i("BroadcastReceiver", "Battery is low");
+            Toast.makeText(context.getApplicationContext(), "Battery is Low", Toast.LENGTH_SHORT).show();

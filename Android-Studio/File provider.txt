@@ -1,0 +1,4 @@
+File provider
+  buildFeatures {
+        dataBinding=true;
+    }
